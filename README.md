@@ -5,3 +5,5 @@ Three core features will be
 BUYING STOCK - This will be you having to buy stock for surging prices and those going out of stock too quickly. Wholesale prices may rise or fall due to random occurances
 CHANGING PRICES/DISCOUNTS - This is for the player to change prices and give discounts so items that have too many in stock can sell.
 EMPLOYEES SYSTEM - This will be firing employees when you have too many but you may lose money with severance. Then hiring more employees. Buying security for stealing.
+
+Current Focus: Creating a foundation for my game with having all the files and some code setup.
