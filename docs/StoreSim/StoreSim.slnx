@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="StoreSim/StoreSim.vcxproj" Id="5acef1bf-d322-4b11-ad54-8e0d678e5980" />
+</Solution>
