@@ -7,3 +7,6 @@ CHANGING PRICES/DISCOUNTS - This is for the player to change prices and give dis
 EMPLOYEES SYSTEM - This will be firing employees when you have too many but you may lose money with severance. Then hiring more employees. Buying security for stealing.
 
 Current Focus: Creating a foundation for my game with having all the files and some code setup.
+
+
+UPDATE: I currently have made all the files and began my projects idea which will be a store simulator. I am currently adding code to the project but everything else has been completed like the git repo and reflection items. Hoping not to run into any errors but I want a solid starting foundation of running code for the milestone.
