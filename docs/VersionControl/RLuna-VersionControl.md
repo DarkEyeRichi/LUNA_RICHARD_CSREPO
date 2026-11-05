@@ -4,7 +4,7 @@ Update this document where indicated [look for the brackets!]. Replace text insi
 
 <br>
 
-## [ Course Name <-- Replace all text in brackets ]
+## [ Project and Portfolio I: Computer Science ]
 
 - **[ Richard Luna ]**
 - **[ 11/20/26 ]**
