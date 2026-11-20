@@ -64,21 +64,23 @@ These changes were made in this final development session. Their actual commit d
 - Capture genuine screenshots in `images/` showing successful compilation, the running menu/inventory, trading/staffing, and restored save data. Suggested names are `milestone4-build-success.png`, `milestone4-running-inventory.png`, `milestone4-trading-staff.png`, and `milestone4-save-load.png`.
 - Copy the author's completed Final Project Stand-Up into README.md.
 - Review any instructor-posted Issues or feedback that has not yet been provided.
-- Authenticate to GitHub, push dev, create/update Issues on Project 4, and mark verified development work Done.
-- Create and review the final dev-to-main Pull Request, connect it to the board, merge it, and verify main contains the completed project.
+- Connect Issues #7, #8, and #9 to Project 4 and update their statuses as the final Pull Request is completed.
+- Finish the evidence and reflection for Pull Request #10, connect it to the board, mark it ready, merge it, and verify main contains the completed project.
 - Review repository contents and history before making it public, then verify the public link while signed out.
 - Capture the completed Project board with its Issues and final Pull Request.
 - Submit the public repository link and Project board screenshot to Full Sail.
 
-Computer Use stopped because it could not verify the browser URL. Command-line GitHub access also requires authentication. No GitHub Issues, Project board updates, Pull Request, repository-visibility change, screenshots, or Full Sail submission were completed during this session.
+GitHub authentication recovered on retry. The four development commits are pushed to dev. The three development Issues below have been created and assigned to DarkEyeRichi, and [Pull Request #10](https://github.com/DarkEyeRichi/LUNA_RICHARD_CSREPO/pull/10) is open as a draft from dev into main. Its diff is mergeable and passes the local checks. The draft links all three Issues for automatic closure when merged.
 
-### Development Issues ready to create or match to existing Issues
+The signed-in Full Sail Milestone 4 page is accessible. Its final reflection is a Discord Week 4 reply that still needs to be supplied by the author. Windows screenshot capture currently times out and mouse clicks report missing geometry. The GitHub credential can access repository features but does not have the Projects scope, so board updates require working browser controls. Repository public visibility awaits the author's confirmation. Screenshots, board linking, the final merge, and Full Sail submission remain pending.
+
+### Final development Issues
 
 | Issue | Acceptance criteria already verified locally |
 |---|---|
-| Complete grocery trading and store operations | Restock/sell update cash and stock together, price changes work, and staffing/security/daily simulation record their costs |
-| Add durable store save and load | State survives restart, invalid files preserve the active game, and failed writes report an error |
-| Validate console navigation and regressions | All 27 integration checks pass in each of the four build configurations |
+| [#7 Complete grocery trading and store operations](https://github.com/DarkEyeRichi/LUNA_RICHARD_CSREPO/issues/7) | Restock/sell update cash and stock together, price changes work, and staffing/security/daily simulation record their costs |
+| [#8 Add durable store save and load](https://github.com/DarkEyeRichi/LUNA_RICHARD_CSREPO/issues/8) | State survives restart, invalid files preserve the active game, and failed writes report an error |
+| [#9 Validate console navigation and final regressions](https://github.com/DarkEyeRichi/LUNA_RICHARD_CSREPO/issues/9) | All 27 integration checks pass in each of the four build configurations |
 
 Future ideas, such as new grocery categories or richer customer behavior, can remain in Backlog.
 
