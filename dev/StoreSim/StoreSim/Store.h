@@ -1,6 +1,7 @@
 #pragma once
 #include "Product.h"
 #include "Transaction.h"
+#include <random>
 #include <vector>
 
 class Store
@@ -10,6 +11,8 @@ private:
     std::vector<Transaction> transactions;
     long long balanceCents = 50000;
     int day = 1;
+    int employees = 0;
+    bool security = false;
 
     Product* FindProduct(int productId);
     void Record(const std::string& description, long long cashChangeCents);
@@ -22,4 +25,10 @@ public:
     void PurchaseStock(int productId, int amount);
     void SellProduct(int productId, int amount);
     void ChangePrice(int productId, int newPriceCents);
+    void DisplayFinances() const;
+    void DisplayStaff() const;
+    void HireEmployee();
+    void FireEmployee();
+    void BuySecurity();
+    void AdvanceDay(std::mt19937& generator);
 };
