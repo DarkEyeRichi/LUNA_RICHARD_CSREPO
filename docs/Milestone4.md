@@ -63,16 +63,17 @@ These changes were made in this final development session. Their actual commit d
 
 - Capture genuine screenshots in `images/` showing successful compilation, the running menu/inventory, trading/staffing, and restored save data. Suggested names are `milestone4-build-success.png`, `milestone4-running-inventory.png`, `milestone4-trading-staff.png`, and `milestone4-save-load.png`.
 - Copy the author's completed Final Project Stand-Up into README.md.
-- Review any instructor-posted Issues or feedback that has not yet been provided.
-- Connect Issues #7, #8, and #9 to Project 4 and update their statuses as the final Pull Request is completed.
+- Review any additional instructor feedback supplied outside the repository. The existing repository Issues and comments were reviewed and contain no instructor-authored bug reports.
+- Verify Issues #7, #8, and #9 move from In Progress to Done when the final Pull Request is merged.
 - Finish the evidence and reflection for Pull Request #10, connect it to the board, mark it ready, merge it, and verify main contains the completed project.
-- Review repository contents and history before making it public, then verify the public link while signed out.
 - Capture the completed Project board with its Issues and final Pull Request.
 - Submit the public repository link and Project board screenshot to Full Sail.
 
-GitHub authentication recovered on retry. The four development commits are pushed to dev. The three development Issues below have been created and assigned to DarkEyeRichi, and [Pull Request #10](https://github.com/DarkEyeRichi/LUNA_RICHARD_CSREPO/pull/10) is open as a draft from dev into main. Its diff is mergeable and passes the local checks. The draft links all three Issues for automatic closure when merged.
+GitHub authentication recovered on retry. The development commits are pushed to dev. The three development Issues below have been created and assigned to DarkEyeRichi, and [Pull Request #10](https://github.com/DarkEyeRichi/LUNA_RICHARD_CSREPO/pull/10) is open as a draft from dev into main. Its diff is mergeable and passes the local checks. The draft links all three Issues for automatic closure when merged. The Project board was inspected and all three Issues are linked in In Progress through its existing automation.
 
-The signed-in Full Sail Milestone 4 page is accessible. Its final reflection is a Discord Week 4 reply that still needs to be supplied by the author. Windows screenshot capture currently times out and mouse clicks report missing geometry. The GitHub credential can access repository features but does not have the Projects scope, so board updates require working browser controls. Repository public visibility awaits the author's confirmation. Screenshots, board linking, the final merge, and Full Sail submission remain pending.
+The signed-in Full Sail Milestone 4 page is accessible. Its final reflection is a Discord Week 4 reply that still needs to be copied from the author's existing post. Windows screenshot capture currently times out and mouse clicks report missing geometry. The GitHub credential can access repository features but does not have the Projects scope, so adding the Pull Request to the board requires working browser controls or the author adding it manually.
+
+After the author's explicit approval, the repository was changed to Public and anonymous GitHub API access returned HTTP 200. The repository history was scanned for common GitHub-token, AWS-key, and private-key patterns with zero matches. Screenshots, the final reflection, linking the Pull Request to the board, the final merge, and Full Sail submission remain pending.
 
 ### Final development Issues
 
