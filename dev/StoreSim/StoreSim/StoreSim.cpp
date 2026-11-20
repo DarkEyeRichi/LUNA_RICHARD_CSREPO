@@ -30,20 +30,38 @@ int main()
 {
     Store store;
     std::mt19937 generator(std::random_device{}());
+    const std::filesystem::path saveFile = "store_save.txt";
     std::cout << "REALISTIC STORE SIMULATOR\n"
               << "Grow your store toward $1,000 cash. Restock, set prices, and open for a day.\n"
               << "Prices are entered in dollars. Choose Help for costs and controls.\n";
+    std::cout << "Save location: " << std::filesystem::absolute(saveFile).string() << '\n';
     while (true)
     {
         std::cout << '\n';
         store.DisplayBalance();
         std::cout << "1. View inventory\n2. Purchase stock\n3. Sell products\n"
                   << "4. Change shelf price / discount\n5. Transaction history\n"
-                  << "6. Finances\n7. Staff and security\n8. Open for one day\n9. Help\n0. Exit\n";
+                  << "6. Finances\n7. Staff and security\n8. Open for one day\n"
+                  << "9. Save store\n10. Load store\n11. Help\n0. Exit\n";
         int choice;
-        if (!ReadNumber("Choose (0-9): ", choice, 0, 9) || choice == 0)
+        if (!ReadNumber("Choose (0-11): ", choice, 0, 11))
             break;
-        if (choice == 1)
+        if (choice == 0)
+        {
+            if (store.HasUnsavedChanges())
+            {
+                int action;
+                if (!ReadNumber("Unsaved changes. 1 Save and exit | 2 Discard and exit | 0 Back: ",
+                    action, 0, 2))
+                    break;
+                if (action == 0)
+                    continue;
+                if (action == 1 && !store.Save(saveFile))
+                    continue;
+            }
+            break;
+        }
+        else if (choice == 1)
             store.DisplayInventory();
         else if (choice == 5)
             store.DisplayHistory();
@@ -70,6 +88,27 @@ int main()
         }
         else if (choice == 9)
         {
+            std::error_code error;
+            bool exists = std::filesystem::exists(saveFile, error);
+            int confirmation = 1;
+            if (exists && !ReadNumber("Replace the existing save? 1 Yes | 0 Cancel: ",
+                confirmation, 0, 1))
+                break;
+            if (confirmation == 1)
+                store.Save(saveFile);
+        }
+        else if (choice == 10)
+        {
+            int confirmation = 1;
+            if (store.HasUnsavedChanges()
+                && !ReadNumber("Loading replaces unsaved changes. 1 Load | 0 Cancel: ",
+                    confirmation, 0, 1))
+                break;
+            if (confirmation == 1)
+                store.Load(saveFile);
+        }
+        else if (choice == 11)
+        {
             std::cout << "\n=== HOW TO PLAY ===\n"
                       << "Start with $500 and six grocery products. Aim for $1,000 cash.\n"
                       << "Restocking spends wholesale cost. Selling receives the shelf price.\n"
@@ -78,7 +117,9 @@ int main()
                       << "Employees cost $25 to hire and $5/day, with $15 severance to fire.\n"
                       << "Security costs $75 plus $3/day and prevents theft.\n"
                       << "One wholesale price changes each day. Review prices and low-stock notices.\n"
-                      << "Use 0 at product/quantity prompts to cancel. Money rounds to the nearest cent.\n";
+                      << "Use 0 at product/quantity prompts to cancel. Money rounds to the nearest cent.\n"
+                      << "Save stores cash, stock, prices, staff, day, and history. Load restores them.\n"
+                      << "Choose Save before exiting. The exit menu also offers to save changes.\n";
         }
         else
         {
@@ -110,6 +151,8 @@ int main()
             }
         }
     }
+    if (!std::cin && store.HasUnsavedChanges())
+        std::cout << "Input ended with unsaved changes. The previous save is still available.\n";
     std::cout << "Store closed. Thanks for playing!\n";
     return 0;
 }

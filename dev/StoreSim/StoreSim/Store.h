@@ -1,6 +1,7 @@
 #pragma once
 #include "Product.h"
 #include "Transaction.h"
+#include <filesystem>
 #include <random>
 #include <vector>
 
@@ -13,6 +14,7 @@ private:
     int day = 1;
     int employees = 0;
     bool security = false;
+    bool unsavedChanges = false;
 
     Product* FindProduct(int productId);
     void Record(const std::string& description, long long cashChangeCents);
@@ -31,4 +33,7 @@ public:
     void FireEmployee();
     void BuySecurity();
     void AdvanceDay(std::mt19937& generator);
+    bool HasUnsavedChanges() const;
+    bool Save(const std::filesystem::path& filename);
+    bool Load(const std::filesystem::path& filename);
 };

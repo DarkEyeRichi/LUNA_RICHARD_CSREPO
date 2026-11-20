@@ -1,7 +1,14 @@
 #include "Store.h"
 #include <algorithm>
+#include <fstream>
 #include <iomanip>
 #include <iostream>
+#include <utility>
+
+#ifdef _WIN32
+#define NOMINMAX
+#include <Windows.h>
+#endif
 
 Store::Store()
 {
@@ -27,6 +34,7 @@ void Store::Record(const std::string& description, long long cashChangeCents)
 {
     transactions.emplace_back(day, description, cashChangeCents);
     balanceCents += cashChangeCents;
+    unsavedChanges = true;
 }
 
 void Store::DisplayInventory() const
@@ -288,4 +296,165 @@ void Store::AdvanceDay(std::mt19937& generator)
     DisplayBalance();
     if (balanceCents >= 100000)
         std::cout << "Store milestone reached: at least $1,000.00 in cash!\n";
+}
+
+bool Store::HasUnsavedChanges() const
+{
+    return unsavedChanges;
+}
+
+bool Store::Save(const std::filesystem::path& filename)
+{
+    if (transactions.size() > 100000)
+    {
+        std::cout << "Save limit reached (100,000 transactions). Your current session is still available.\n";
+        return false;
+    }
+    std::filesystem::path temporary = filename;
+#ifdef _WIN32
+    temporary += "." + std::to_string(GetCurrentProcessId()) + ".tmp";
+#else
+    temporary += ".tmp";
+#endif
+    std::ofstream file(temporary, std::ios::trunc);
+    if (!file)
+    {
+        std::cout << "Cannot create the save file. Check the folder's write permissions.\n";
+        return false;
+    }
+
+    file << "STORESIM 1\n" << day << ' ' << balanceCents << ' '
+         << employees << ' ' << security << '\n' << inventory.size() << '\n';
+    for (const Product& product : inventory)
+    {
+        file << product.GetId() << ' ' << std::quoted(product.GetName()) << ' '
+             << product.GetPurchaseCostCents() << ' ' << product.GetSellingPriceCents()
+             << ' ' << product.GetQuantity() << '\n';
+    }
+    file << transactions.size() << '\n';
+    for (const Transaction& transaction : transactions)
+    {
+        file << transaction.GetDay() << ' ' << std::quoted(transaction.GetDescription())
+             << ' ' << transaction.GetCashChangeCents() << '\n';
+    }
+    file.close();
+    std::error_code error;
+    if (!file)
+    {
+        std::filesystem::remove(temporary, error);
+        std::cout << "Save failed while writing. The previous save was preserved.\n";
+        return false;
+    }
+
+    // Replace the previous save only after the new file has been completely written.
+#ifdef _WIN32
+    bool replaced = MoveFileExW(temporary.c_str(), filename.c_str(),
+        MOVEFILE_REPLACE_EXISTING | MOVEFILE_WRITE_THROUGH) != 0;
+#else
+    std::filesystem::rename(temporary, filename, error);
+    bool replaced = !error;
+#endif
+    if (!replaced)
+    {
+        std::filesystem::remove(temporary, error);
+        std::cout << "Cannot replace the save file. Check permissions or close programs using it.\n";
+        return false;
+    }
+    unsavedChanges = false;
+    std::cout << "Store saved successfully.\n";
+    return true;
+}
+
+bool Store::Load(const std::filesystem::path& filename)
+{
+    std::error_code sizeError;
+    auto bytes = std::filesystem::file_size(filename, sizeError);
+    if (!sizeError && bytes > 16 * 1024 * 1024)
+    {
+        std::cout << "Save file is too large. Your current store was preserved.\n";
+        return false;
+    }
+    std::ifstream file(filename);
+    if (!file)
+    {
+        std::cout << "No readable save file was found. Save a store first.\n";
+        return false;
+    }
+    auto invalid = []()
+    {
+        std::cout << "Save file is damaged or unsupported. Your current store was preserved.\n";
+        return false;
+    };
+
+    std::string signature;
+    int version;
+    if (!(file >> signature >> version) || signature != "STORESIM" || version != 1)
+        return invalid();
+
+    // Parse and validate a separate store before replacing the active game.
+    Store loaded;
+    int savedSecurity;
+    if (!(file >> loaded.day >> loaded.balanceCents >> loaded.employees >> savedSecurity)
+        || loaded.day < 1 || loaded.day > 3650 || loaded.balanceCents < 0
+        || loaded.employees < 0 || loaded.employees > 10
+        || (savedSecurity != 0 && savedSecurity != 1))
+        return invalid();
+    loaded.security = savedSecurity == 1;
+
+    int productCount;
+    if (!(file >> productCount) || productCount != 6)
+        return invalid();
+
+    for (Product& product : loaded.inventory)
+    {
+        int id, cost, price, quantity;
+        std::string name;
+        if (!(file >> id) || (file >> std::ws).peek() != '"'
+            || !(file >> std::quoted(name) >> cost >> price >> quantity)
+            || id != product.GetId() || name != product.GetName()
+            || cost < 1 || cost > 1000000 || price < 1 || price > 1000000
+            || quantity < 0 || quantity > 10000)
+            return invalid();
+        product.SetPurchaseCostCents(cost);
+        product.SetSellingPriceCents(price);
+        product.RemoveStock(product.GetQuantity());
+        product.AddStock(quantity);
+    }
+
+    int transactionCount;
+    if (!(file >> transactionCount) || transactionCount < 0 || transactionCount > 100000)
+        return invalid();
+    loaded.transactions.reserve(transactionCount);
+    long long expectedBalance = 50000;
+    int previousDay = 1;
+    for (int index = 0; index < transactionCount; ++index)
+    {
+        int transactionDay;
+        std::string description;
+        long long change;
+        if (!(file >> transactionDay) || (file >> std::ws).peek() != '"'
+            || !(file >> std::quoted(description) >> change)
+            || transactionDay < previousDay || transactionDay > loaded.day
+            || description.empty() || description.size() > 100
+            || change < -10000000000LL || change > 10000000000LL)
+            return invalid();
+        for (char character : description)
+        {
+            if (character < ' ' || character > '~')
+                return invalid();
+        }
+        expectedBalance += change;
+        if (expectedBalance < 0)
+            return invalid();
+        loaded.transactions.emplace_back(transactionDay, description, change);
+        previousDay = transactionDay;
+    }
+    file >> std::ws;
+    if (!file.eof() || expectedBalance != loaded.balanceCents)
+        return invalid();
+
+    *this = std::move(loaded);
+    std::cout << "Store loaded successfully.\n";
+    DisplayBalance();
+    return true;
 }

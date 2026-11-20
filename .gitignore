@@ -7,3 +7,8 @@ Debug/
 Release/
 x64/
 x86/
+
+# Runtime saves and interrupted save files
+store_save.txt
+store_save.txt.*.tmp
+store_save.txt.tmp
