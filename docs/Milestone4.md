@@ -50,6 +50,18 @@ The checks in `dev/StoreSim/verify_store_sim.py` launch the real console executa
 
 The verification uses temporary files and leaves the player's save outside the test folders unchanged.
 
+## Screenshots
+
+Captured from the Debug x64 build on November 20, 2026.
+
+| Screenshot | What it shows |
+|---|---|
+| [milestone4-build-success.png](../images/milestone4-build-success.png) | A full rebuild of `StoreSim.slnx` (Debug x64) succeeding with 0 warnings and 0 errors |
+| [milestone4-running-inventory.png](../images/milestone4-running-inventory.png) | The game running, with the main menu and the six-product grocery inventory |
+| [milestone4-trading-staff.png](../images/milestone4-trading-staff.png) | Buying 10 Milk ($500.00 → $480.00), then hiring an employee ($480.00 → $455.00) |
+| [milestone4-open-day.png](../images/milestone4-open-day.png) | Opening for a day: customer sales, a theft event, a wholesale price change, and rent paid |
+| [milestone4-save-load.png](../images/milestone4-save-load.png) | Saving at $480.00, closing the game, restarting it, and loading the save back to $480.00 |
+
 ## Local development commits
 
 1. Implement grocery inventory, stock purchases, sales and transaction history.
@@ -61,19 +73,18 @@ These changes were made in this final development session. Their actual commit d
 
 ## Remaining submission work
 
-- Capture genuine screenshots in `images/` showing successful compilation, the running menu/inventory, trading/staffing, and restored save data. Suggested names are `milestone4-build-success.png`, `milestone4-running-inventory.png`, `milestone4-trading-staff.png`, and `milestone4-save-load.png`.
 - Copy the author's completed Final Project Stand-Up into README.md.
 - Review any additional instructor feedback supplied outside the repository. The existing repository Issues and comments were reviewed and contain no instructor-authored bug reports.
 - Verify Issues #7, #8, and #9 move from In Progress to Done when the final Pull Request is merged.
-- Finish the evidence and reflection for Pull Request #10, connect it to the board, mark it ready, merge it, and verify main contains the completed project.
+- Mark Pull Request #10 ready, merge it, and verify main contains the completed project. The Pull Request is connected to the Project board with status In Progress.
 - Capture the completed Project board with its Issues and final Pull Request.
 - Submit the public repository link and Project board screenshot to Full Sail.
 
 GitHub authentication recovered on retry. The development commits are pushed to dev. The three development Issues below have been created and assigned to DarkEyeRichi, and [Pull Request #10](https://github.com/DarkEyeRichi/LUNA_RICHARD_CSREPO/pull/10) is open as a draft from dev into main. Its diff is mergeable and passes the local checks. The draft links all three Issues for automatic closure when merged. The Project board was inspected and all three Issues are linked in In Progress through its existing automation.
 
-The signed-in Full Sail Milestone 4 page is accessible. Its final reflection is a Discord Week 4 reply that still needs to be copied from the author's existing post. Windows screenshot capture currently times out and mouse clicks report missing geometry. The GitHub credential can access repository features but does not have the Projects scope, so adding the Pull Request to the board requires working browser controls or the author adding it manually.
+The signed-in Full Sail Milestone 4 page is accessible. Its final reflection is a Discord Week 4 reply that still needs to be copied from the author's existing post. The application screenshots were captured directly from the console windows and are listed above. Pull Request #10 was added to the Project board through the browser.
 
-After the author's explicit approval, the repository was changed to Public and anonymous GitHub API access returned HTTP 200. The repository history was scanned for common GitHub-token, AWS-key, and private-key patterns with zero matches. Screenshots, the final reflection, linking the Pull Request to the board, the final merge, and Full Sail submission remain pending.
+After the author's explicit approval, the repository was changed to Public and anonymous GitHub API access returned HTTP 200. The repository history was scanned for common GitHub-token, AWS-key, and private-key patterns with zero matches. The final reflection, the final merge, and the Full Sail submission remain pending.
 
 ### Final development Issues
 
