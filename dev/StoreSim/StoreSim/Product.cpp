@@ -1,29 +1,35 @@
 #include "Product.h"
-#include <iostream>
+#include <cmath>
 #include <iomanip>
+#include <iostream>
 
-Product::Product(
-    int _id,
-    const std::string& _name,
-    double _purchaseCost,
-    double _sellingPrice,
-    int _quantity)
+Product::Product(int id, const std::string& name, double purchaseCost,
+    double sellingPrice, int quantity)
+    : id(id), name(name), purchaseCostCents(std::lround(purchaseCost * 100)),
+      sellingPriceCents(std::lround(sellingPrice * 100)), quantity(quantity)
 {
-    id = _id;
-    name = _name;
-    purchaseCost = _purchaseCost;
-    sellingPrice = _sellingPrice;
-    quantity = _quantity;
 }
+
+int Product::GetId() const { return id; }
+const std::string& Product::GetName() const { return name; }
+int Product::GetPurchaseCostCents() const { return purchaseCostCents; }
+int Product::GetSellingPriceCents() const { return sellingPriceCents; }
+int Product::GetQuantity() const { return quantity; }
+void Product::AddStock(int amount) { quantity += amount; }
+void Product::RemoveStock(int amount) { quantity -= amount; }
+void Product::SetSellingPriceCents(int price) { sellingPriceCents = price; }
+void Product::SetPurchaseCostCents(int cost) { purchaseCostCents = cost; }
 
 void Product::Display() const
 {
-    std::cout << std::fixed << std::setprecision(2);
-
-    std::cout << "ID: " << id << '\n';
-    std::cout << "Name: " << name << '\n';
-    std::cout << "Purchase cost: $" << purchaseCost << '\n';
-    std::cout << "Selling price: $" << sellingPrice << '\n';
-    std::cout << "Quantity: " << quantity << '\n';
-    std::cout << "-------------------------\n";
+    std::cout << std::left << std::setw(6) << id << std::setw(18) << name
+              << std::right << std::fixed << std::setprecision(2)
+              << std::setw(12) << purchaseCostCents / 100.0
+              << std::setw(12) << sellingPriceCents / 100.0
+              << std::setw(10) << quantity;
+    if (quantity == 0)
+        std::cout << "  OUT OF STOCK";
+    else if (quantity <= 5)
+        std::cout << "  LOW STOCK";
+    std::cout << '\n';
 }
